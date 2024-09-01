@@ -82,9 +82,29 @@ images.forEach(image => {
      gallery.insertAdjacentHTML('beforeend', listItemHTML);
 });
 
+let instance;
+
 gallery.addEventListener('click', event => {
      if (event.target.closest('.gallery-link')) {
        event.preventDefault(); 
        const imageUrl = event.target.getAttribute('data-source');
-       console.log(imageUrl)
+       instance = showImage(imageUrl)
      }});
+
+
+function showImage(imageUrl) {
+instance = basicLightbox.create(`
+  <img width="1112" height="640" src="${imageUrl}">`
+  , {
+  onShow: (instance) => {document.addEventListener('keydown', onKeyDown);},
+  onClose: (instance) => {document.removeEventListener('keydown', onKeyDown);}
+});
+instance.show();
+return instance;
+}
+
+function onKeyDown(event) {
+if (event.key === 'Escape' && instance.visible()) {
+  instance.close();
+}
+}
