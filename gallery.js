@@ -64,7 +64,7 @@ const images = [
      },
     ];
 
-const gallery = document.querySelector('.gallery');
+const gallery = document.querySelector('ul.gallery');
 
 images.forEach(image => {
   const listItemHTML = `
@@ -85,4 +85,6 @@ images.forEach(image => {
 gallery.addEventListener('click', event => {
      if (event.target.closest('.gallery-link')) {
        event.preventDefault(); 
+       const imageUrl = event.target.getAttribute('data-source');
+       console.log(imageUrl)
      }});
